@@ -26,14 +26,21 @@ int main() {
     pwmout.period_ms(10);
     pwmout.write(0.4f);
      
+    float humidite;
     //DigitalIn digitalin
 
     while (1) {
         //digitalin.read();
+        
         if(dht.readData() == ERROR_NONE) {
- 
+            humidite = dht.ReadHumidity();
+            printf("humidité %4.2f \n",humidite);
 
-        }        
+        }       
+        
+       //printf("hello world\n");
+        
+
         // put your main code here, to run repeatedly:
         ThisThread::sleep_for(10ms);
     }
