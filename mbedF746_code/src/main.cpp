@@ -313,6 +313,9 @@ void lv_roller_1(void)
     //lv_obj_center(roller1);
     lv_obj_add_event_cb(roller2, lv_roller_1_event_handler_Day, LV_EVENT_ALL, NULL);
 
+/*
+*   Year for roller
+*/
 lv_obj_t * roller3 = lv_roller_create(tab3);
     lv_roller_set_options(roller3,
                           "2000\n"
@@ -405,15 +408,17 @@ int main()
     pwmout.period_ms(10);
     pwmout.write(0.0f);
 
-    
+    //Create Tab
     lv_example_tabview_1();
+    //Init Chart for humidity and temperature
     chart_Init_humidity();
     chart_Init_temperature();
     // Btn_Options();
     Label_Humidity();
     Label_Temperature();
+    //Slider for pompe
     lv_Slider();
-    
+    //Box Text
     lv_Box_Text();
     lv_example_calendar_1();
     lv_roller_1();
@@ -425,16 +430,19 @@ int main()
     {
         // digitalin.read();
 
-        if (dht.readData() == ERROR_NONE)
+        if (dht.readData() == ERROR_NONE) //Check is com serial is OK
         {
             humidity = dht.ReadHumidity();
             temperature = dht.ReadTemperature(CELCIUS);
             //printf("humidité %4.2f \n", humidity);
             //printf("temperature %4.2f \n", temperature);
+
+            //Put New value on Chart
             chart_setNextValue_humidity(humidity);
             chart_refresh_humidity();
             chart_setNextValue_temperature(temperature);
             chart_refresh_temperature();
+            //Text of humidity and temp
             Label_event_humidity();
             Label_event_temperature();
 
